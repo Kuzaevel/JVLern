@@ -22,12 +22,12 @@ public class MainLambda {
         }
         System.out.println(System.lineSeparator());
 
-        Collections.sort(staff, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee o1, Employee o2) {
-                return o1.getSalary().compareTo(o2.getSalary());
-            }
-        });
+//        Collections.sort(staff, new Comparator<Employee>() {
+//            @Override
+//            public int compare(Employee o1, Employee o2) {
+//                return o1.getSalary().compareTo(o2.getSalary());
+//            }
+//        });
 
         for(Employee employee : staff) {
             System.out.println(employee);
@@ -35,11 +35,11 @@ public class MainLambda {
         System.out.println(System.lineSeparator());
 
         /* Записываем JSON  */
-
-/*        staff.stream().forEach(e-> {
+/*
+        staff.stream().forEach(e-> {
             String content = "{\r\n \"name\": \"" + e.getName() + "\",\r\n \"salary\": " + e.getSalary() + ", \r\n \"workStart\": \"" + (new SimpleDateFormat("dd.MM.yyyy")).format(e.getWorkStart()) + "\"\r\n},";
             try {
-                Files.writeString(Paths.get(jsonFile), (content + System.lineSeparator()), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+                Files.writeString(Paths.get(jsonFile), (content + System.lineSeparator()), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -85,17 +85,20 @@ public class MainLambda {
 //        });
 
         // Lambda Expressions
-//        staff.forEach(employee -> System.out.println(employee.toString()));
+        staff.forEach(employee -> System.out.println(employee.toString()));
 
         // forEach
-        System.out.println("Old salaries");
+        System.out.println("\n\nOld salaries");
+        System.out.println(System.lineSeparator());
         staff.forEach(System.out::println);
 
         int salaryIncrease = 10000;
         staff.forEach(e->e.setSalary(e.getSalary() + salaryIncrease));
+        System.out.println(System.lineSeparator());
 
-        System.out.println("New salaries");
+        System.out.println("New salaries\n");
         staff.forEach(System.out::println);
+        System.out.println(System.lineSeparator());
 //        for(Employee empl: staff) {
 //            System.out.println(empl.toString());
 //        }
@@ -104,20 +107,37 @@ public class MainLambda {
         //  Stream - is part of collection
 //        Stream<Employee> stream = staff.stream();
 //        stream.filter(employee -> employee.getSalary() >= 100000).forEach(System.out::println);
-        System.out.println("----Stream----");
-        staff.stream().filter(e->e.getSalary()>=100000).forEach(System.out::println);
+        System.out.println("\n----Stream----\n");
+        staff.stream().filter(e -> e.getSalary() >= 100000).forEach(System.out::println);
 
+
+        System.out.println("\n----Stream1----\n");
+        staff.parallelStream().findFirst().stream().forEach(System.out::println);
+
+
+        System.out.println("\n----Stream2----\n");
+        staff.parallelStream().findFirst().ifPresent(System.out::println);
+        staff.parallelStream().findAny().ifPresent(System.out::println);
+
+
+        System.out.println("\n----Stream3----\n");
+        Optional<Employee> dd = staff.parallelStream().findFirst();
+        System.out.println(dd.get());
+
+
+        System.out.println("\n----Stream4----\n");
+        Files.lines(Paths.get(staffFile)).forEach(System.out::println);
 
         // Создать stream и работать с ним
-        System.out.println();
-        System.out.println("----Stream Numbers----");
-        Stream<Integer> numbers = Stream.of(1,2,3,4,5,6,7,8,9,10);
-        numbers.filter(n -> n%2==0).forEach(System.out::println);
+        //System.out.println();
+        System.out.println("\n----Stream Numbers----");
+        Stream<Integer> numbers = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        numbers.filter(n -> n % 2 == 0).forEach(System.out::println);
 
         // Stream из массива
         System.out.println();
         System.out.println("----Stream from Array----");
-        Integer[] numbersi = {1,2,3,4,5,6,7,8,9,10};
+        Integer[] numbersi = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Arrays.stream(numbersi).filter(n -> n >= 6).forEach(System.out::println);
 
         // Endless Stream
@@ -127,7 +147,7 @@ public class MainLambda {
 
         // Generate Stream
         System.out.println();
-        System.out.println("----Generate Stream----");
+        System.out.println("\n----Generate Stream----");
         // Stream.generate(()->"aaa").forEach(System.out::print);
 
         "asdaksdljgbajksgd".chars().forEach(System.out::print);
@@ -135,12 +155,12 @@ public class MainLambda {
 
         // Sorting with stream
         System.out.println();
-        System.out.println("----Sorting with stream----");
+        System.out.println("\n----Sorting with stream----");
         staff.stream().sorted(Comparator.comparing(Employee::getName)).sorted(Comparator.comparing(Employee::getSalary)).forEach(System.out::println);
 
         // Max Min with streams
         System.out.println();
-        System.out.println("----Max Min with streams----");
+        System.out.println("\n----Max Min with streams----");
         Optional<Employee> optional = staff.stream().max(Comparator.comparing(Employee::getSalary));
         Employee employee1 = optional.get();
         // OR safety
@@ -195,6 +215,7 @@ public class MainLambda {
         catch (Exception ex) {
             ex.printStackTrace();
         }
+
         return staff;
     }
 
