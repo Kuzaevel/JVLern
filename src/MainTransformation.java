@@ -57,5 +57,11 @@ public class MainTransformation {
 
         colorsList.removeIf(x->x.equals("blue"));
         System.out.println(colorsList);
+
+        List<String> cities  = new ArrayList<>(Arrays.asList("Minsk", "Moscow" , "Kiev", "Ljubljana"));
+
+        cities.removeIf(x -> x.length()>7 && x.startsWith("L"));
+
+        System.out.println(cities);
     }
 }
