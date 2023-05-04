@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="JVLearning:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JVLearning_jar</output-path>
+    <root id="archive" name="JVLearning.jar">
+      <element id="module-output" name="JVLearning" />
+    </root>
+  </artifact>
+</component>
