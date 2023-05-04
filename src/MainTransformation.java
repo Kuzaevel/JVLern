@@ -63,5 +63,9 @@ public class MainTransformation {
         cities.removeIf(x -> x.length()>7 && x.startsWith("L"));
 
         System.out.println(cities);
+
+        Thread thread1 = new Thread(() ->
+                System.out.println("Hello World from Runnable!"));
+        thread1.start();
     }
 }
